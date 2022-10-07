@@ -93,6 +93,11 @@ Replace square with circle if you want to run your circle code.
 ```console
 roslaunch ur3e_trajectory load_params.launch
 ```
+Edit the string variable `out_path` in the `RecordPose.cpp` file to the destination where you want to save your end effector poses. After this is done, Run the following command at the same time you run your code for square or circle trajectory:
+
+```console
+rosrun ur3e_trajectory RecordPose
+```
 
 You can use the generated csv file of the end effector poses to plot the followed trajectory against the ideal trajectory.
 
