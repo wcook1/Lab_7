@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The purpose of this lab is to familiarize you with the UR3 robot and the tools we have for making it do useful and/or interesting things. Additionally, you will cause the end point of the robot arm to move in both a square and circle in a vertical plane and in a horizontal plane. Next, you will cause the end point of the arm to move in the largest possible square that is not in the horizontal plane. Finally, you will move the end point of the arm through this largest square as quickly as possible.
+The purpose of this lab is to familiarize you with the UR3 robot and the tools we have for making it do useful and/or interesting things. Additionally, you will cause the end point of the robot arm to move in both a square and circle in a vertical plane and in a horizontal plane. The Horizontal Plane is the plane perpendicular to Z-Axis and the Vertical plane is the plane perpendicular to either X or Y axes. Next, you will cause the end point of the arm to move in the largest possible square that is not in the horizontal plane. Finally, you will move the end point of the arm through this largest square as quickly as possible.
 
 **NOTE**: Throughout the course you will **first** create a successful simulation of the desired arm movement in Gazebo. Only after getting this simulation approved by the lab staff will you implement it on the actual arm. This is a very important safety measure.
 
@@ -14,9 +14,11 @@ All the tools you need to do this lab are in a Docker container. Docker containe
 
 **The commands given in each step below are meant to be copied and pasted in the terminal**.
 
+If you want to work on your own computer, install docker and portainer using [this page](https://github.com/ENRE467/Getting_Started/wiki/Installing-Docker-and-Portainer) and build a docker image using [this page](https://github.com/ENRE467/Getting_Started/wiki/Building-a-Docker-Image)
+
 ## Steps
 
-1. Create your own folder on the lab machine so you can save your work. Also, just to be sure, upload your work to your Github account before you leave the lab.
+1. Create your own folder on the lab machine so you can save your work. Also, just to be sure, upload your work to your Github account before you leave the lab. Do this in the host pc and not inside the Docker container as `git push` and `git pull` commands will not work inside the container. This is because your git repositories does not exist inside the docker container.
 
 2. Open a terminal window by pressing `Ctrl + Alt + T`. In the terminal window, navigate to your folder using cd command. Now, run the following command to clone the repository for Lab 7:
 
