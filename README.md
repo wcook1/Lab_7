@@ -111,9 +111,9 @@ rosrun ur3e_setup setup.launch
 rosrun moveit_tutorial tutorial.cpp
 ```
 
-You will use these helper functions in your code to move your robot in square and circle trajectories. A package for this lab is provided to you and the name of this package is `ur3e_trajectory`. Add your code to the files `square.cpp` and `circle.cpp` for square and circle trajectories. 
+13. You will use these helper functions in your code to move your robot in square and circle trajectories. A package for this lab is provided to you and the name of this package is `ur3e_trajectory`. Add your code to the files `square.cpp` and `circle.cpp` for square and circle trajectories. 
 
-13. Run the following command to run your code for square or circle trajectories:
+Run the following command to run your code for square or circle trajectories:
 
 ```console
 rosrun ur3e_trajectory square 
