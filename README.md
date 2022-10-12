@@ -58,7 +58,12 @@ After the packages are built, you need to source them so that you can use them i
 source ~/workspace/devel/setup.bash
 ```
 
-8. Tmux is a tool which is used to split a terminal window into multiple terminals. Tmux is already installed in your docker container. To split the terminal vertically, click on the terminal you want to split and press `Ctrl + A` to select that terminal and press `V` to split it vertically. To split the terminal horizontally, click on the terminal you want to split and press `Ctrl + A` to select it and then press `B` to split it horizontally.
+8. Tmux is a tool which is used to split a terminal window into multiple terminals. Tmux is already installed in your docker container. To split the terminal vertically, type tmux and press enter, this will open the current terminal with tmux, then click on the terminal you want to split and press `Ctrl + A` to select that terminal and press `V` to split it vertically. To split the terminal horizontally, click on the terminal you want to split and press `Ctrl + A` to select it and then press `B` to split it horizontally to do it manually. 
+An example command to split into four terminals using terminal commands is below:
+
+```console
+tmux new-session \; \split-window -v \; \split-window -h \; \select-pane -t 1 \; \split-window -h
+```
 
 9. Run the following command to start gazebo with the UR3e arm in it:
 
