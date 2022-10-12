@@ -58,6 +58,26 @@ After the packages are built, you need to source them so that you can use them i
 source ~/workspace/devel/setup.bash
 ```
 
+ To build projects in ROS, it is advised to follow the specific directory structure. place all you code files in the src folder of the catkin project. see below for reference.
+
+```console
+┌──────────────────────────┐             ┌──────────────────────────┐
+│ ProjectDir               │             │ catkin_ws                │
+│ │                        │             │   │                      │
+│ └────src                 │             │   └──src                 │
+│      │                   │             │      │                   │
+│      ├─catkin_project_1  │             │      ├─catkin_project_1  │
+│      │                   │             │      │                   │
+│      ├─catkin_project_2  ├────────────►│      ├─catkin_project_2  │
+│      │        x          │             │      │        x          │
+│      │        x          │ Volume Map  │      │        x          │
+│      │        x          │             │      │        x          │
+│      │        x          │             │      │        x          │
+│      └─catkin_project_N  │             │      └─catkin_project_N  │
+│                          │             │                          │
+└──────────────────────────┘             └──────────────────────────┘
+```
+
 8. Tmux is a tool which is used to split a terminal window into multiple terminals. Tmux is already installed in your docker container. To split the terminal vertically, type tmux and press enter, this will open the current terminal with tmux, then click on the terminal you want to split and press `Ctrl + A` to select that terminal and press `V` to split it vertically. To split the terminal horizontally, click on the terminal you want to split and press `Ctrl + A` to select it and then press `B` to split it horizontally to do it manually. 
 An example command to split into four terminals using terminal commands is below:
 
@@ -91,25 +111,6 @@ rosrun ur3e_setup setup.launch
 rosrun moveit_tutorial tutorial.cpp
 ```
 
-13. To build projects in ROS, it is advised to follow the specific directory structure. place all you code files in the src folder of the catkin project. see below for reference.
-
-```console
-┌──────────────────────────┐             ┌──────────────────────────┐
-│ ProjectDir               │             │ catkin_ws                │
-│ │                        │             │   │                      │
-│ └────src                 │             │   └──src                 │
-│      │                   │             │      │                   │
-│      ├─catkin_project_1  │             │      ├─catkin_project_1  │
-│      │                   │             │      │                   │
-│      ├─catkin_project_2  ├────────────►│      ├─catkin_project_2  │
-│      │        x          │             │      │        x          │
-│      │        x          │ Volume Map  │      │        x          │
-│      │        x          │             │      │        x          │
-│      │        x          │             │      │        x          │
-│      └─catkin_project_N  │             │      └─catkin_project_N  │
-│                          │             │                          │
-└──────────────────────────┘             └──────────────────────────┘
-```
 You will use these helper functions in your code to move your robot in square and circle trajectories. A package for this lab is provided to you and the name of this package is `ur3e_trajectory`. Add your code to the files `square.cpp` and `circle.cpp` for square and circle trajectories. 
 
 13. Run the following command to run your code for square or circle trajectories:
