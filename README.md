@@ -102,7 +102,7 @@ roslaunch ur3e_setup ur3e_moveit.launch
 11. Run the following command to add collision objects:
 
 ```console
-rosrun ur3e_setup setup.launch
+roslaunch ur3e_setup setup.launch
 ```
 
 12. The `moveit_tutorial` package has sample code for performing three tasks: 1. Move the robot to a joint goal, 2. Move the robot to a pose goal and 3. Move the robot from one point to another in a cartesian path. You can refer to the `tutorial.cpp` in the `moveit_tutorial` package for the sample code. This sample code uses the helper functions from `moviet_wrapper` package. In a new terminal, run the following command to run this sample code:
