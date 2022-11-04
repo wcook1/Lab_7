@@ -43,7 +43,7 @@ xhost +local:docker
 6. Now, you will create a docker container based on the `ur3e_image` image which is already on your lab computer and volume map the src directory in the host pc to the src directory in the docker container. To do that, enter the following command (Make sure that you are in the Lab_7/src directory inside the terminal before running this command):
 
 ```console
-docker run -it --rm --name UR3Container -e DISPLAY=:0 -e LOCAL_USER_ID=1000 -v $PWD:/home/user/workspace/src -v /tmp/.X11-unix:/tmp/.X11-unix:rw  --network=host --pid=host --privileged ur3e_image:latest
+docker run -it --rm --name UR3Container --net=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD:/home/${USER}/workspace/src" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" ur3e_image:latest
 ```
 
 7. Now, you are in the workspace directory in the docker container. This is your catkin workspace. Check that the `~/workspace/src` directory contains the files from the `Lab_7/src` directory in your host pc by using the command `ls ~/workspace/src`. This will list all the files in your src folder. Now, if everything seems good, the first thing you do is build your catkin packages. To do that, first go to the workspace directory (if you are not already there) using the command `cd ~/workspace`. To build the workspace, execute the following command:
