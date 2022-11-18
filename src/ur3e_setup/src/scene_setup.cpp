@@ -33,10 +33,24 @@ int main(int argc, char **argv)
     table_pose.position.z = 0.383;
     ArmController::createCollisionObject(robot_table_obj, table_id, table_primitive, table_pose, table_type, table_dim, planning_frame);
 
+    // Wall
+    moveit_msgs::CollisionObject robot_wall_obj;
+    std::string wall_id = "wall";
+    shape_msgs::SolidPrimitive wall_primitive;
+    std::vector<double> wall_dim = {1.12, 0.1, 1.3};
+    std::string wall_type = "BOX";
+    geometry_msgs::Pose wall_pose;
+    wall_pose.orientation.w = 1.0;
+    wall_pose.position.x = 0.0;
+    wall_pose.position.y = -0.6;
+    wall_pose.position.z = 0.65;
+    ArmController::createCollisionObject(robot_wall_obj, wall_id, wall_primitive, wall_pose, wall_type, wall_dim, planning_frame);
+
     // Actual publishing
     ros::Publisher planning_scene_diff_publisher = n.advertise<moveit_msgs::PlanningScene>("planning_scene", 1);
     moveit_msgs::PlanningScene planning_scene_msg;
     ArmController::addCollisionObjectToScene(robot_table_obj, planning_scene_msg);
+    ArmController::addCollisionObjectToScene(robot_wall_obj, planning_scene_msg);
 
     planning_scene_msg.is_diff = true;
     ros::Rate loop_rate(100);
