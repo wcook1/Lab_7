@@ -135,3 +135,29 @@ rosrun ur3e_trajectory RecordPose
 You can use the generated csv file of the end effector poses to plot the followed trajectory against the ideal trajectory.
 
 15. After you are done with your simulation. You can run your code on the real UR3e arm. Ask one of the Teaching Assistants to help you.
+
+## Commands to run your code on real UR3E robot
+
+1. Run the following command to start a docker container:
+
+```console
+docker run -it --rm --name UR3Container --net=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD:/home/${USER}/workspace/src" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume="/dev:/dev:rw" --ulimit rtprio=99 --ulimit rttime=-1 ur3e_image:latest
+```
+
+2. Run the following command to connect to robot:
+
+```console
+roslaunch ur_robot_driver ur3e_bringup.launch robot_ip:=192.168.77.22 kinematics_config:=$(rospack find ur_calibration)/calib/ur3e_calib.yaml z_height:=0.766
+```
+
+3. Start Moveit! for UR3e:
+
+```console
+roslaunch ur3e_moveit_config ur3e_moveit_planning_execution.launch
+```
+
+4. Start Rviz:
+
+```console
+roslaunch ur3e_moveit_config moveit_rviz.launch rviz_config:=$(rospack find ur3e_moveit_config)/launch/moveit.rviz
+```
