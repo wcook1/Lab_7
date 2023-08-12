@@ -3,4 +3,4 @@
 	url = https://github.com/ros-industrial/universal_robot
 [submodule "src/Universal_Robots_ROS_Driver"]
 	path = src/Universal_Robots_ROS_Driver
-	url = https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/tree/master
+	url = https://github.com/UniversalRobots/Universal_Robots_ROS_Driver
