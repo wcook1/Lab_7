@@ -23,7 +23,7 @@ If you want to work on your own computer, install docker and portainer using [th
 2. Open a terminal window by pressing `Ctrl + Alt + T`. In the terminal window, navigate to your folder using cd command. Now, run the following command to clone the repository for Lab 7:
 
     ```console
-    git clone https://github.com/ENRE467/Lab_7.git
+    git clone --recursive https://github.com/ENRE467/Lab_7.git
     ```
 
 3. Navigate to the `Lab_7/src` directory in your folder using cd command.
