@@ -56,13 +56,14 @@ RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends --all
     sudo rm -rf /var/lib/apt/lists/* 
 
 # Setup tmux config
-ADD --chown=${USER}:${USER} https://github.com/kanishkaganguly/dotfiles/blob/master/tmux/.tmux.conf $HOME/.tmux.conf
+ADD --chown=${USER}:${USER} https://raw.githubusercontent.com/kanishkaganguly/dotfiles/master/tmux/.tmux.bash.conf $HOME/.tmux.conf
 
 # Set datetime and timezone correctly
 # Remove duplicate sources
 RUN sudo ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo '$TZ' | sudo tee -a /etc/timezone
 
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+
 
 # Install ROS packages
 RUN sudo apt-get update && sudo apt-get install -y \
