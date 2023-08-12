@@ -49,7 +49,7 @@
   <arg name="tf_prefix" default="" doc="tf_prefix used for the robot."/>
   <arg name="tf_pub_rate" default="500" doc="Rate at which robot_state_publisher should publish transforms."/>
 
-  <!-- Gazebo parameters -->
+   <!-- Gazebo parameters -->
   <arg name="paused" default="false" doc="Starts Gazebo in paused mode" />
   <arg name="gui" default="true" doc="Starts Gazebo gui" />
 
@@ -57,7 +57,7 @@
   <arg name="z_height" default="0.0" />
 
   <!-- gripper -->
-  <arg name="gripper" default="false" />
+  <!-- <arg name="gripper" default="false" /> -->
 
   <!-- Load urdf on the parameter server -->
   <include file="$(arg robot_description_file)">
@@ -65,8 +65,8 @@
     <arg name="kinematics_params" value="$(arg kinematics_params)"/>
     <arg name="physical_params" value="$(arg physical_params)"/>
     <arg name="visual_params" value="$(arg visual_params)"/>
-    <arg name="z_height" value="$(arg z_height)" />
-    <arg name="gripper" value="$(arg gripper)" />
+    <!-- <arg name="z_height" value="$(arg z_height)" />
+    <arg name="gripper" value="$(arg gripper)" /> -->
   </include>
 
   <!-- Robot state publisher -->
@@ -75,7 +75,7 @@
     <param name="tf_prefix" value="$(arg tf_prefix)" />
   </node>
 
-  <!-- Start the 'driver' (ie: Gazebo in this case) -->
+  <!--Start the 'driver' (ie: Gazebo in this case)-->
   <include file="$(find ur_gazebo)/launch/inc/ur_control.launch.xml">
     <arg name="controller_config_file" value="$(arg controller_config_file)"/>
     <arg name="controllers" value="$(arg controllers)"/>
@@ -83,8 +83,8 @@
     <arg name="paused" value="$(arg paused)"/>
     <arg name="stopped_controllers" value="$(arg stopped_controllers)"/>
     <arg name="spawn_z" value="$(arg spawn_z)"/>
-    <arg name="gripper" value="$(arg gripper)" />
-    <arg name="gripper_controller_config_file" value="$(arg gripper_controller_config_file)"/>
-    <arg name="gripper_controllers" value="$(arg gripper_controllers)"/>
+    <!-- <arg name="gripper" value="$(arg gripper)" /> -->
+    <!-- <arg name="gripper_controller_config_file" value="$(arg gripper_controller_config_file)"/> -->
+    <!-- <arg name="gripper_controllers" value="$(arg gripper_controllers)"/> -->
   </include>
 </launch>
