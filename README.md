@@ -27,7 +27,7 @@ If you want to work on your own computer, install docker and portainer using [th
     ```console
     git clone --recursive https://github.com/ENRE467/Lab_7.git
     ```
-You don't need to repeat this step for subsequent lab sessions if the repository is already cloned.
+    Skip step 3 if the repository is already cloned.
 
 4. Navigate to the `Lab_7/src` directory in your folder using cd command.
 
@@ -87,13 +87,16 @@ You don't need to repeat this step for subsequent lab sessions if the repository
     └──────────────────────────┘             └──────────────────────────┘
     ```
 
-9. Tmux is a tool which is used to split a terminal window into multiple terminals. Tmux is already installed in your docker container. An example command to split into four terminals using terminal commands is below:
+9. Tmux is a tool which is used to split a terminal window into multiple terminals. Tmux is already installed in your docker container.                                                                         An example command to start a new TMUX session and split the window into four terminals using terminal commands is below:
 
     ```console
     tmux new-session \; \split-window -v \; \split-window -h \; \select-pane -t 1 \; \split-window -h
     ```
-   Remember the following commands to create a new session, split windows and select the desired window.
-   To create a new tmux session, type tmux and press enter, this will open the current terminal with tmux.     To split an existing window vertically, type:
+   The above code can be broken down into separate commands to create a new session, split windows and     select the desired window.
+   
+   To create a new tmux session, type tmux and press enter, this will open the current terminal with tmux.
+
+   To split an existing window vertically, type:
    ```console
     tmux \split-window -h \; 
     ```
@@ -105,10 +108,10 @@ You don't need to repeat this step for subsequent lab sessions if the repository
    ```console
     tmux \select-window -0 \; 
     ```
-   Replace 0 with the number of the window you want to select.
-   **A shortcut for toggling between the split window is to press Ctrl+B and then press 0 until you reach the desired window.**
+   Replace 0 with the index of the window you want to select (0,1,2,3 etc).
+   **A shortcut for toggling between the split window is to hold down the keys 'Ctrl+B' and then press 0 until you reach the desired window.**
 
-11. Run the following command to start gazebo with the UR3e arm in it:
+11. Run the following command to start **gazebo** with the UR3e arm in it:
 
     ```console
     roslaunch ur3e_setup ur3e_gazebo.launch z_height:=0.8
@@ -116,7 +119,7 @@ You don't need to repeat this step for subsequent lab sessions if the repository
 
     `z_height` is the height at which the robot is spawned in Gazebo.
 
-12. In a different terminal window, run the following command to start Moveit! functionality and start RViz:
+12. In a different terminal window, run the following command to start **Moveit!** functionality and start **RViz**:
 
     ```console
     roslaunch ur3e_setup ur3e_moveit.launch
