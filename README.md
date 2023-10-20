@@ -12,50 +12,52 @@ All the tools you need to do this lab are in a Docker container. Docker containe
 
 **Volume Map**: Docker Containers are destroyed when you exit the container, which means all the data will be lost. Volume mapping is used to save the important data before destroying the container. A directory from host pc is mapped to a directory in the container. Changes made in the mapped directory in the docker container is reflected in the host pc. Save the important data in the mapped directory inside the container.
 
+## Installing the docker and portainer and building a docker image
 **The commands given in each step below are meant to be copied and pasted in the terminal**.
-
+Refer to the repository **ENRE467/Getting_Started** to install the docker files and build the docker image. 
 If you want to work on your own computer, install docker and portainer using [this page](https://github.com/ENRE467/Getting_Started/wiki/Installing-Docker-and-Portainer) and build a docker image using [this page](https://github.com/ENRE467/Getting_Started/wiki/Building-a-Docker-Image)
 
-## Steps
+## Steps for Lab 7
 
-1. Create your own folder on the lab machine so you can save your work. Also, just to be sure, upload your work to your Github account before you leave the lab. Do this in the host pc and not inside the Docker container as `git push` and `git pull` commands will not work inside the container. This is because your git repositories does not exist inside the docker container.
+1. Make sure that you have built the docker image. 
+2. Remember to create your own folder on the lab machine so you can save your work. Also, just to be sure, upload your work to your Github account before you leave the lab. Do this in the host pc and not inside the Docker container as `git push` and `git pull` commands will not work inside the container. This is because your git repositories does not exist inside the docker container.
 
-2. Open a terminal window by pressing `Ctrl + Alt + T`. In the terminal window, navigate to your folder using cd command. Now, run the following command to clone the repository for Lab 7:
+3. Open a terminal window by pressing `Ctrl + Alt + T`. In the terminal window, navigate to your folder using cd command. If you haven't cloned the repository for Lab 7 already, run the following command to clone the repository for Lab 7:
 
     ```console
     git clone --recursive https://github.com/ENRE467/Lab_7.git
     ```
+You don't need to repeat this step for subsequent lab sessions if the repository is already cloned.
 
-3. Navigate to the `Lab_7/src` directory in your folder using cd command.
+4. Navigate to the `Lab_7/src` directory in your folder using cd command.
 
-4. Visual Studio Code (VSC) is already installed in your systems in the lab. You will use VSC to write code in this part of the course. To open the src directory in VSC, run the following command:
+5. Visual Studio Code (VSC) is already installed in your systems in the lab. You will use VSC to write code in this part of the course. To open the src directory in VSC, run the following command:
 
     ```console
     code .
     ```
 
-5. Run the following command so that you can see the GUI applications from docker container in the screen of the host pc:
+6. Run the following command so that you can see the GUI applications from docker container in the screen of the host pc:
 
     ```console
     xhost +local:docker
     ```
 
-6. Now, you will create a docker container based on the `ur3e_image` image which is already on your lab computer and volume map the src directory in the host pc to the src directory in the docker container. To do that, enter the following command (Make sure that you are in the Lab_7/src directory inside the terminal before running this command):
+7. Now, you will create a docker container based on the `ur3e_image` image which is already on your lab computer and volume map the src directory in the host pc to the src directory in the docker container. To do that, enter the following command (Make sure that you are in the Lab_7/src directory of your folder inside the terminal before running this command):
 
     ```console
     docker run -it --rm --name UR3Container --net=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD:/home/${USER}/catkin_ws/src" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" ur3e_image:latest
     ```
 
-7. Now, you are in the workspace directory in the docker container. This is your catkin workspace. Check that the `~/catkin_ws/src` directory contains the files from the `Lab_7/src` directory in your host pc by using the command `ls ~/catkin_ws/src`. This will list all the files in your src folder. Now, if everything seems good, the first thing you do is build your catkin packages. To do that, first go to the workspace directory (if you are not already there) using the command `cd ~/catkin_ws`. To build the workspace, execute the following command:
-
-    ```console
-    catkin build
-    ```
-
-    If any of the packages are missing dependecies and are not built run the following command:
+8. Now, you are in the workspace directory in the docker container. This is your catkin workspace. Check that the `~/catkin_ws/src` directory contains the files from the `Lab_7/src` directory in your host pc by using the command `ls ~/catkin_ws/src`. This will list all the files in your src folder. Now, if everything seems good, the first thing you do is build your catkin packages. To do that, first go to the workspace directory (if you are not already there) using the command `cd ~/catkin_ws`.                              Run the following command to install any misscating dependencies for the packages: 
 
     ```console
     rosdep install --from-paths src --ignore-src -r -y
+
+    To build the workspace, execute the following command:
+
+    ```console
+    catkin build
     ```
 
     After the packages are built, you need to source them so that you can use them in the current terminal window. Run the following command to do that:
@@ -84,15 +86,28 @@ If you want to work on your own computer, install docker and portainer using [th
     └──────────────────────────┘             └──────────────────────────┘
     ```
 
-8. Tmux is a tool which is used to split a terminal window into multiple terminals. Tmux is already installed in your docker container. To split the terminal vertically, type tmux and press enter, this will open the current terminal with tmux, then click on the terminal you want to split and press `Ctrl + A` to select that terminal and press `V` to split it vertically. To split the terminal horizontally, click on the terminal you want to split and press `Ctrl + A` to select it and then press `B` to split it horizontally to do it manually.
-
-    An example command to split into four terminals using terminal commands is below:
+9. Tmux is a tool which is used to split a terminal window into multiple terminals. Tmux is already installed in your docker container. An example command to split into four terminals using terminal commands is below:
 
     ```console
     tmux new-session \; \split-window -v \; \split-window -h \; \select-pane -t 1 \; \split-window -h
     ```
+   Remember the following commands to create a new session, split windows and select the desired window.
+   To create a new tmux session, type tmux and press enter, this will open the current terminal with tmux.     ```
+   To split an existing window vertically, type:
+   ```console
+    tmux \split-window -h \; 
+    ```
+   Similary, to split an existing window horizontally, type:
+   ```console
+    tmux \split-window -v \; 
+    ```
+   To select a certain pane on the tmux split terminal, type:
+   ```console
+    tmux \select-window -0 \; 
+    ```
+   Replace 0 with the number of the window you want to select. A shortcut for toggling between the split window is to press Ctrl+B and then press 0. 
 
-9. Run the following command to start gazebo with the UR3e arm in it:
+11. Run the following command to start gazebo with the UR3e arm in it:
 
     ```console
     roslaunch ur3e_setup ur3e_gazebo.launch z_height:=0.8
@@ -100,25 +115,25 @@ If you want to work on your own computer, install docker and portainer using [th
 
     `z_height` is the height at which the robot is spawned in Gazebo.
 
-10. In a different terminal window, run the following command to start Moveit! functionality and start RViz:
+12. In a different terminal window, run the following command to start Moveit! functionality and start RViz:
 
     ```console
     roslaunch ur3e_setup ur3e_moveit.launch
     ```
 
-11. Run the following command to add collision objects:
+13. Run the following command to add collision objects:
 
     ```console
     roslaunch ur3e_setup setup.launch
     ```
 
-12. The `moveit_tutorial` package has sample code for performing three tasks: 1. Move the robot to a joint goal, 2. Move the robot to a pose goal and 3. Move the robot from one point to another in a cartesian path. You can refer to the `tutorial.cpp` in the `moveit_tutorial` package for the sample code. This sample code uses the helper functions from `moviet_wrapper` package. In a new terminal, run the following command to run this sample code:
+14. The `moveit_tutorial` package has sample code for performing three tasks: 1. Move the robot to a joint goal, 2. Move the robot to a pose goal and 3. Move the robot from one point to another in a cartesian path. You can refer to the `tutorial.cpp` in the `moveit_tutorial` package for the sample code. This sample code uses the helper functions from `moviet_wrapper` package. In a new terminal, run the following command to run this sample code:
 
     ``` console
     rosrun moveit_tutorial tutorial
     ```
 
-13. You will use these helper functions in your code to move your robot in square and circle trajectories. A package for this lab is provided to you and the name of this package is `ur3e_trajectory`. Add your code to the files `square.cpp` and `circle.cpp` for square and circle trajectories.
+15. You will use these helper functions in your code to move your robot in square and circle trajectories. A package for this lab is provided to you and the name of this package is `ur3e_trajectory`. Add your code to the files `square.cpp` and `circle.cpp` for square and circle trajectories.
 
     Run the following command to run your code for square or circle trajectories:
 
@@ -128,7 +143,7 @@ If you want to work on your own computer, install docker and portainer using [th
 
     Replace square with circle if you want to run your circle code.
 
-14. You need to calculate the error between the trajectory followed by your robot and the desired trajectory. To do this, you have to record the end effector positions while your robot traces the trajectory. The `RecordPose.cpp` file contains the code to record end effector positions at the rate of 2 Hz. It starts recording poses when the boolean parameter `record_pose` turns true. You have to set the value of this parameter to true before executing the trajectory and set it to false after trajectory executions. Look at the end of `tutorial.cpp` file in the `moveit_tutorial` package for sample implementation. The boolean parameter `record_pose` needs to be loaded to parameter server and the `RecordPose.cpp` program will look for that parameter from the parameter server. Run the following command to load the parameter:
+16. You need to calculate the error between the trajectory followed by your robot and the desired trajectory. To do this, you have to record the end effector positions while your robot traces the trajectory. The `RecordPose.cpp` file contains the code to record end effector positions at the rate of 2 Hz. It starts recording poses when the boolean parameter `record_pose` turns true. You have to set the value of this parameter to true before executing the trajectory and set it to false after trajectory executions. Look at the end of `tutorial.cpp` file in the `moveit_tutorial` package for sample implementation. The boolean parameter `record_pose` needs to be loaded to parameter server and the `RecordPose.cpp` program will look for that parameter from the parameter server. Run the following command to load the parameter:
 
     ```console
     roslaunch ur3e_trajectory load_params.launch
@@ -142,7 +157,7 @@ If you want to work on your own computer, install docker and portainer using [th
 
     You can use the generated csv file of the end effector poses to plot the followed trajectory against the ideal trajectory.
 
-15. After you are done with your simulation. You can run your code on the real UR3e arm. Ask one of the Teaching Assistants to help you.
+17. After you are done with your simulation. You can run your code on the real UR3e arm. Ask one of the Teaching Assistants to help you.
 
 ## Commands to run your code on real UR3E robot
 
