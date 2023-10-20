@@ -53,6 +53,7 @@ You don't need to repeat this step for subsequent lab sessions if the repository
 
     ```console
     rosdep install --from-paths src --ignore-src -r -y
+    ```
 
     To build the workspace, execute the following command:
 
@@ -92,8 +93,7 @@ You don't need to repeat this step for subsequent lab sessions if the repository
     tmux new-session \; \split-window -v \; \split-window -h \; \select-pane -t 1 \; \split-window -h
     ```
    Remember the following commands to create a new session, split windows and select the desired window.
-   To create a new tmux session, type tmux and press enter, this will open the current terminal with tmux.     ```
-   To split an existing window vertically, type:
+   To create a new tmux session, type tmux and press enter, this will open the current terminal with tmux.     To split an existing window vertically, type:
    ```console
     tmux \split-window -h \; 
     ```
@@ -105,7 +105,8 @@ You don't need to repeat this step for subsequent lab sessions if the repository
    ```console
     tmux \select-window -0 \; 
     ```
-   Replace 0 with the number of the window you want to select. A shortcut for toggling between the split window is to press Ctrl+B and then press 0. 
+   Replace 0 with the number of the window you want to select.
+   **A shortcut for toggling between the split window is to press Ctrl+B and then press 0 until you reach the desired window.**
 
 11. Run the following command to start gazebo with the UR3e arm in it:
 
