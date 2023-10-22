@@ -109,7 +109,7 @@ If you want to work on your own computer, install docker and portainer using [th
     tmux \select-window -0 \; 
     ```
    Replace 0 with the index of the window you want to select (0,1,2,3 etc).
-   **A shortcut for toggling between the split window is to hold down the keys 'Ctrl+B' and then press 0 until you reach the desired window.**
+   **A shortcut for toggling between the split window is to hold down the keys 'Ctrl+B' and then press 'O' until you reach the desired window.**
 
 11. Run the following command to start **gazebo** with the UR3e arm in it:
 
