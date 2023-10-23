@@ -111,13 +111,11 @@ If you want to work on your own computer, install docker and portainer using [th
    Replace 0 with the index of the window you want to select (0,1,2,3 etc).
    **A shortcut for toggling between the split windows is to press the keys 'Ctrl+B' and then type 'O' to reach the desired window.**
 
-11. Run the following command to start **gazebo** with the UR3e arm in it:
+11. Run the following command to start **gazebo** and **RViz** with the UR3e arm in it:
 
     ```console
-    roslaunch ur3e_setup ur3e_gazebo.launch z_height:=0.8
+    roslaunch ur3e_custom_moveit_package_4 demo_gazebo.launch
     ```
-
-    `z_height` is the height at which the robot is spawned in Gazebo.
 
 12. In a different terminal window, run the following command to start **Moveit!** functionality and start **RViz**:
 
@@ -125,19 +123,13 @@ If you want to work on your own computer, install docker and portainer using [th
     roslaunch ur3e_setup ur3e_moveit.launch
     ```
 
-13. Run the following command to add collision objects:
-
-    ```console
-    roslaunch ur3e_setup setup.launch
-    ```
-
-14. The `moveit_tutorial` package has sample code for performing three tasks: 1. Move the robot to a joint goal, 2. Move the robot to a pose goal and 3. Move the robot from one point to another in a cartesian path. You can refer to the `tutorial.cpp` in the `moveit_tutorial` package for the sample code. This sample code uses the helper functions from `moviet_wrapper` package. In a new terminal, run the following command to run this sample code:
+13. The `moveit_tutorial` package has sample code for performing three tasks: 1. Move the robot to a joint goal, 2. Move the robot to a pose goal and 3. Move the robot from one point to another in a cartesian path. You can refer to the `tutorial.cpp` in the `moveit_tutorial` package for the sample code. This sample code uses the helper functions from `moviet_wrapper` package. In a new terminal, run the following command to run this sample code:
 
     ``` console
     rosrun moveit_tutorial tutorial
     ```
 
-15. You will use these helper functions in your code to move your robot in square and circle trajectories. A package for this lab is provided to you and the name of this package is `ur3e_trajectory`. Add your code to the files `square.cpp` and `circle.cpp` for square and circle trajectories.
+14. You will use these helper functions in your code to move your robot in square and circle trajectories. A package for this lab is provided to you and the name of this package is `ur3e_trajectory`. Add your code to the files `square.cpp` and `circle.cpp` for square and circle trajectories.
 
     Run the following command to run your code for square or circle trajectories:
 
@@ -147,7 +139,7 @@ If you want to work on your own computer, install docker and portainer using [th
 
     Replace square with circle if you want to run your circle code.
 
-16. You need to calculate the error between the trajectory followed by your robot and the desired trajectory. To do this, you have to record the end effector positions while your robot traces the trajectory. The `RecordPose.cpp` file contains the code to record end effector positions at the rate of 2 Hz. It starts recording poses when the boolean parameter `record_pose` turns true. You have to set the value of this parameter to true before executing the trajectory and set it to false after trajectory executions. Look at the end of `tutorial.cpp` file in the `moveit_tutorial` package for sample implementation. The boolean parameter `record_pose` needs to be loaded to parameter server and the `RecordPose.cpp` program will look for that parameter from the parameter server. Run the following command to load the parameter:
+15. You need to calculate the error between the trajectory followed by your robot and the desired trajectory. To do this, you have to record the end effector positions while your robot traces the trajectory. The `RecordPose.cpp` file contains the code to record end effector positions at the rate of 2 Hz. It starts recording poses when the boolean parameter `record_pose` turns true. You have to set the value of this parameter to true before executing the trajectory and set it to false after trajectory executions. Look at the end of `tutorial.cpp` file in the `moveit_tutorial` package for sample implementation. The boolean parameter `record_pose` needs to be loaded to parameter server and the `RecordPose.cpp` program will look for that parameter from the parameter server. Run the following command to load the parameter:
 
     ```console
     roslaunch ur3e_trajectory load_params.launch
@@ -161,7 +153,7 @@ If you want to work on your own computer, install docker and portainer using [th
 
     You can use the generated csv file of the end effector poses to plot the followed trajectory against the ideal trajectory.
 
-17. After you are done with your simulation. You can run your code on the real UR3e arm. Ask one of the Teaching Assistants to help you.
+16. After you are done with your simulation. You can run your code on the real UR3e arm. Ask one of the Teaching Assistants to help you.
 
 ## Commands to run your code on real UR3E robot
 
