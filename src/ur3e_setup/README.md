@@ -6,16 +6,19 @@
 ---
 ### ROS Preparation
 ```bash
-cd ~/workspace
+cd ~/catkin_ws
 catkin build
-source devel/setup.bash # Once per terminal instance
+source devel/setup.bash
+tmux new-session \; \split-window -v \; \split-window -h \; \select-pane -t 1 \; \split-window -h
 ```
 ---
 ### Launch Sequence
+Initiate UR driver communication with real robot
 ```bash
-# Initiate UR driver communication with real robot
-roslaunch ur_robot_driver ur3e_bringup.launch robot_ip:=192.168.77.22 kinematics_config:=/home/user/catkin_ws/src/ur3e2_calib.yaml z_height:=0.77
+roslaunch ur_robot_driver ur3e_bringup.launch robot_ip:=192.168.77.22 kinematics_config:=$(rospack find ur3e_setup)/config/ur3e_calib.yaml z_height:=0.77
+```
 
 # Start MoveIt for UR3e. It also launches Rviz
+```bash
 roslaunch ur3e_moveit_mrc ur3e_moveit.launch
 ```
