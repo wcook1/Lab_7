@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The purpose of this lab is to familiarize you with the UR3 robot and the tools we have for making it do useful and/or interesting things. Additionally, you will cause the end point of the robot arm to move in both a square and circle in a vertical plane and in a horizontal plane. The Horizontal Plane is the plane perpendicular to Z-Axis and the Vertical plane is the plane perpendicular to either X or Y axes. Next, you will cause the end point of the arm to move in the largest possible square that is not in the horizontal plane. Finally, you will move the end point of the arm through this largest square as quickly as possible.
+The purpose of this lab is to familiarize you with the UR3 robot and the tools we have for making it do useful and/or interesting things. Additionally, you will cause the end point of the robot arm to move in both a square and circle in a vertical plane and in a horizontal plane. The Horizontal Plane is the plane perpendicular to Z-Axis and the Vertical plane is the plane perpendicular to either X or Y axes. Next, you will cause the end point of the arm to move in the largest possible square that is not in the horizontal plane.
 
 **NOTE**: Throughout the course you will **first** create a successful simulation of the desired arm movement in Gazebo. Only after getting this simulation approved by the lab staff will you implement it on the actual arm. This is a very important safety measure.
 
@@ -43,10 +43,10 @@ xhost +local:docker
 6. Now, you will create a docker container based on the `ur3e_image` image which is already on your lab computer and volume map the src directory in the host pc to the src directory in the docker container. To do that, enter the following command (Make sure that you are in the Lab_7/src directory inside the terminal before running this command):
 
 ```console
-docker run -it --rm --name UR3Container --net=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD:/home/${USER}/workspace/src" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" ur3e_image:latest
+docker run -it --rm --name UR3Container --net=host --ipc=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD:/home/${USER}/catkin_ws/src" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" ur3e_image:latest
 ```
 
-7. Now, you are in the workspace directory in the docker container. This is your catkin workspace. Check that the `~/workspace/src` directory contains the files from the `Lab_7/src` directory in your host pc by using the command `ls ~/workspace/src`. This will list all the files in your src folder. Now, if everything seems good, the first thing you do is build your catkin packages. To do that, first go to the workspace directory (if you are not already there) using the command `cd ~/workspace`. To build the workspace, execute the following command:
+7. Now, you are in the workspace directory in the docker container. This is your catkin workspace. Check that the `~/catkin_ws/src` directory contains the files from the `Lab_7/src` directory in your host pc by using the command `ls ~/catkin_ws/src`. This will list all the files in your src folder. Now, if everything seems good, the first thing you do is build your catkin packages. To do that, first go to the workspace directory (if you are not already there) using the command `cd ~/catkin_ws`. To build the workspace, execute the following command:
 
 ```console
 catkin build
@@ -55,7 +55,7 @@ catkin build
 After the packages are built, you need to source them so that you can use them in the current terminal window. Run the following command to do that:
 
 ```console
-source ~/workspace/devel/setup.bash
+source ~/catkin_ws/devel/setup.bash
 ```
 
  To build projects in ROS, it is advised to follow the specific directory structure. place all you code files in the src folder of the catkin project. see below for reference.
@@ -88,7 +88,7 @@ tmux new-session \; \split-window -v \; \split-window -h \; \select-pane -t 1 \;
 9. Run the following command to start gazebo with the UR3e arm in it:
 
 ```console
-roslaunch ur3e_setup ur3e_gazebo.launch z_height:=0.8
+roslaunch ur3e_setup ur3e_gazebo.launch z_height:=0.77
 ```
 
 `z_height` is the height at which the robot is spawned in Gazebo.
@@ -96,22 +96,17 @@ roslaunch ur3e_setup ur3e_gazebo.launch z_height:=0.8
 10. In a different terminal window, run the following command to start Moveit! functionality and start RViz:
 
 ```console
-roslaunch ur3e_setup ur3e_moveit.launch
+roslaunch ur3e_moveit_mrc ur3e_moveit.launch
 ```
+This also spawns a back wall obstacle that is needed for safety reasons. However, if the wall has to be removed, it can be done by adding `spawn_wall:=false` to the end of the command.
 
-11. Run the following command to add collision objects:
-
-```console
-roslaunch ur3e_setup setup.launch
-```
-
-12. The `moveit_tutorial` package has sample code for performing three tasks: 1. Move the robot to a joint goal, 2. Move the robot to a pose goal and 3. Move the robot from one point to another in a cartesian path. You can refer to the `tutorial.cpp` in the `moveit_tutorial` package for the sample code. This sample code uses the helper functions from `moviet_wrapper` package. In a new terminal, run the following command to run this sample code:
+11. The `moveit_tutorial` package has sample code for performing three tasks: 1. Move the robot to a joint goal, 2. Move the robot to a pose goal and 3. Move the robot from one point to another in a cartesian path. You can refer to the `tutorial.cpp` in the `moveit_tutorial` package for the sample code. This sample code uses the helper functions from `moviet_wrapper` package. In a new terminal, run the following command to run this sample code:
 
 ``` console
 rosrun moveit_tutorial tutorial
 ```
 
-13. You will use these helper functions in your code to move your robot in square and circle trajectories. A package for this lab is provided to you and the name of this package is `ur3e_trajectory`. Add your code to the files `square.cpp` and `circle.cpp` for square and circle trajectories. 
+12. You will use these helper functions in your code to move your robot in square and circle trajectories. A package for this lab is provided to you and the name of this package is `ur3e_trajectory`. Add your code to the files `square.cpp` and `circle.cpp` for square and circle trajectories. 
 
 Run the following command to run your code for square or circle trajectories:
 
@@ -121,7 +116,7 @@ rosrun ur3e_trajectory square
 
 Replace square with circle if you want to run your circle code.
 
-14. You need to calculate the error between the trajectory followed by your robot and the desired trajectory. To do this, you have to record the end effector positions while your robot traces the trajectory. The `RecordPose.cpp` file contains the code to record end effector positions at the rate of 2 Hz. It starts recording poses when the boolean parameter `record_pose` turns true. You have to set the value of this parameter to true before executing the trajectory and set it to false after trajectory executions. Look at the end of `tutorial.cpp` file in the `moveit_tutorial` package for sample implementation. The boolean parameter `record_pose` needs to be loaded to parameter server and the `RecordPose.cpp` program will look for that parameter from the parameter server. Run the following command to load the parameter:
+13. You need to calculate the error between the trajectory followed by your robot and the desired trajectory. To do this, you have to record the end effector positions while your robot traces the trajectory. The `RecordPose.cpp` file contains the code to record end effector positions at the rate of 2 Hz. It starts recording poses when the boolean parameter `record_pose` turns true. You have to set the value of this parameter to true before executing the trajectory and set it to false after trajectory executions. Look at the end of `tutorial.cpp` file in the `moveit_tutorial` package for sample implementation. The boolean parameter `record_pose` needs to be loaded to parameter server and the `RecordPose.cpp` program will look for that parameter from the parameter server. Run the following command to load the parameter:
 
 ```console
 roslaunch ur3e_trajectory load_params.launch
@@ -141,16 +136,16 @@ You can use the generated csv file of the end effector poses to plot the followe
 1. Run the following command to start a docker container:
 
 ```console
-docker run -it --rm --name UR3Container --net=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD:/home/${USER}/workspace/src" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume="/dev:/dev:rw" --ulimit rtprio=99 --ulimit rttime=-1 ur3e_image:latest
+docker run -it --rm --name UR3Container --net=host --ipc=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD:/home/${USER}/catkin_ws/src" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume="/dev:/dev:rw" --ulimit rtprio=99 --ulimit rttime=-1 ur3e_image:latest
 ```
 
 2. Run the following command to connect to robot:
 
 ```console
-roslaunch ur_robot_driver ur3e_bringup.launch robot_ip:=192.168.77.22 kinematics_config:=$(rospack find ur_calibration)/calib/ur3e_calib.yaml z_height:=0.766
+roslaunch ur_robot_driver ur3e_bringup.launch robot_ip:=192.168.77.22 kinematics_config:=$(rospack find ur3e_setup)/config/ur3e_calib.yaml z_height:=0.77
 ```
 
-3. Start Moveit! for UR3e:
+3. Start Moveit! with Rviz for UR3e:
 
 ```console
 roslaunch ur3e_moveit_config ur3e_moveit_planning_execution.launch
@@ -159,5 +154,5 @@ roslaunch ur3e_moveit_config ur3e_moveit_planning_execution.launch
 4. Start Rviz:
 
 ```console
-roslaunch ur3e_moveit_config moveit_rviz.launch rviz_config:=$(rospack find ur3e_moveit_config)/launch/moveit.rviz
+roslaunch ur3e_moveit_mrc ur3e_moveit.launch
 ```
