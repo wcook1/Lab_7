@@ -71,7 +71,8 @@ RUN sudo apt-get update && sudo apt-get install -y \
     ros-noetic-fiducial-msgs \
     ros-noetic-aruco-detect \
     # ros-melodic-gripper-action-controller \
-    libeigen3-dev
+    libeigen3-dev && \
+    sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
 
 # Setup UR Drivers
 RUN source /opt/ros/noetic/setup.bash && \
@@ -82,7 +83,8 @@ RUN source /opt/ros/noetic/setup.bash && \
     sudo apt update -qq && \
     rosdep update --include-eol-distros && \
     rosdep install --from-paths src --ignore-src -y && \
-    catkin build
+    catkin build && \
+    sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
 
 # Setup ROS workspace directory
 RUN source /opt/ros/noetic/setup.bash && \
