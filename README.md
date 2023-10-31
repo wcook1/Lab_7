@@ -43,7 +43,7 @@ xhost +local:docker
 6. Now, you will create a docker container based on the `ur3e_image` image which is already on your lab computer and volume map the `src` directory in the host pc to the `src` directory in the docker container. To do that, enter the following command (Make sure that you are in the `Lab_7/src` directory inside the terminal before running this command):
 
 ```bash
-docker run -it --rm --name UR3Container --net=host --ipc=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD:/home/${USER}/catkin_ws/src" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" ur3e_image:latest
+docker run -it --rm --name UR3Container --net=host --ipc=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD:/home/${USER}/catkin_ws/src" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume="/dev:/dev:rw" --ulimit rtprio=99 --ulimit rttime=-1 ur3e_image:latest
 ```
 
 7. Now, you are in the workspace directory in the docker container. This is your catkin workspace. Check that the `~/catkin_ws/src` directory contains the files from the `Lab_7/src` directory in your host pc by using the command `ls ~/catkin_ws/src`. This will list all the files in your src folder. Now, if everything seems good, the first thing you do is build your catkin packages. To do that, first go to the workspace directory (if you are not already there) using the command `cd ~/catkin_ws`. To build the workspace, execute the following command:
@@ -86,7 +86,7 @@ An example command to split into four terminals using terminal commands is below
 tmux new-session \; \split-window -v \; \split-window -h \; \select-pane -t 1 \; \split-window -h
 ```
 
-9. Run the following command to start gazebo with the UR3e arm in it:
+9. Run the following command to start Gazebo with the UR3e arm in it:
 
 ```bash
 roslaunch ur3e_setup ur3e_gazebo.launch z_height:=0.77
@@ -132,21 +132,41 @@ You can use the generated csv file of the end effector poses to plot the followe
 
 15. After you are done with your simulation. You can run your code on the real UR3e arm. Ask one of the Teaching Assistants to help you.
 
-## Commands to run your code on real UR3E robot
+## Commands to run your code on real UR3e robot
 
-1. Run the following command to start a docker container:
+The steps for running your code on the real UR3e arm are similar in their structure to the ones used to for the Gazebo simulation.
+
+1. Start docker container from the `Lab_7/src` folder:
 
 ```bash
 docker run -it --rm --name UR3Container --net=host --ipc=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD:/home/${USER}/catkin_ws/src" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume="/dev:/dev:rw" --ulimit rtprio=99 --ulimit rttime=-1 ur3e_image:latest
 ```
+2. Build the code, source it, and start tmux:
 
-2. Run the following command to connect to robot:
+```bash
+catkin build
+source devel/setup.bash
+tmux new-session \; \split-window -v \; \split-window -h \; \select-pane -t 1 \; \split-window -h
+```
+3. Copy unique for each arm kinematics configuration file from the `Desktop/ENEE467` folder to `Lab_7/src/ur3e_setup/config` folder.
+
+4. Instead of Gazebo launch ROS drivers to connect to the robot arm:
 
 ```bash
 roslaunch ur_robot_driver ur3e_bringup.launch robot_ip:=192.168.77.22 kinematics_config:=$(rospack find ur3e_setup)/config/ur3e_calib.yaml z_height:=0.77
 ```
+**Attention**: If there are any warnings or errors in the output, stop immidately and contact your TA or the lab manager.
 
-3. Start Moveit! with Rviz for UR3e:
+5. In one of the tmux termninals run 
+
+```bash
+rostopic list
+```
+to make sure that the connection was established successfuly and you have access to ROS topics.
+
+5. Ask your TA to help launch the `ur_ros` program on the UR3e tablet. Note, at this point you are controlling the arm from your computer. 
+
+6. Start Moveit! with Rviz for UR3e:
 
 ```bash
 roslaunch ur3e_moveit_mrc ur3e_moveit.launch
