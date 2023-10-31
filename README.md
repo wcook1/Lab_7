@@ -94,10 +94,10 @@ roslaunch ur3e_setup ur3e_gazebo.launch z_height:=0.77
 
 `z_height` is the height at which the robot is spawned in Gazebo.
 
-10. In a different terminal window, run the following command to start Moveit! functionality and start RViz:
+10. In a different terminal window, run the following command to start MoveIt functionality and RViz:
 
 ```bash
-roslaunch ur3e_moveit_mrc ur3e_moveit.launch
+roslaunch ur3e_moveit_mrc ur3e_moveit.launch sim:=true
 ```
 This also spawns a back wall obstacle that is needed for safety reasons. However, if the wall has to be removed, it can be done by adding `spawn_wall:=false` to the end of the command.
 
