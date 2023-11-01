@@ -1,5 +1,5 @@
 <launch>
-    <arg name="dist_to_wall" default="0.3"/>
+    <arg name="dist_to_wall" default="0.4"/>
 
     <node name="scene_setup" pkg="ur3e_setup" type="scene_setup" output="screen">
         <param name="distance" value="$(arg dist_to_wall)"/>

@@ -45,8 +45,11 @@
 
   <!-- Spawning back wall -->
   <arg name="spawn_wall" default="true"/>
+  <arg name="dist_to_wall" default="0.4" />
   <group if="$(arg spawn_wall)">
-    <include file="$(find ur3e_setup)/launch/setup.launch"/>
+    <include file="$(find ur3e_setup)/launch/setup.launch">
+      <arg name="dist_to_wall" value="$(arg dist_to_wall)"/>
+    </include>
   </group>
 
 </launch>
