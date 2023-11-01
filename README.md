@@ -148,12 +148,12 @@ catkin build
 source devel/setup.bash
 tmux new-session \; \split-window -v \; \split-window -h \; \select-pane -t 1 \; \split-window -h
 ```
-3. Copy unique for each arm kinematics configuration file from the `Desktop/ENEE467` folder to `Lab_7/src/ur3e_setup/config` folder.
+3. Copy unique for each arm kinematics configuration file from the `Desktop/ENEE467` folder to the `Lab_7/src/ur3e_setup/config` folder.
 
 4. Instead of Gazebo launch ROS drivers to connect to the robot arm:
 
 ```bash
-roslaunch ur_robot_driver ur3e_bringup.launch robot_ip:=192.168.77.22 kinematics_config:=$(rospack find ur3e_setup)/config/ur3e_calib.yaml z_height:=0.77
+roslaunch ur3e_setup ur3e_bringup_mrc.launch robot_ip:=192.168.77.22 kinematics_config:=$(rospack find ur3e_setup)/config/ur3e_calib.yaml z_height:=0.77
 ```
 **Attention**: If there are any warnings or errors in the output, stop immidately and contact your TA or the lab manager.
 
@@ -164,7 +164,7 @@ rostopic list
 ```
 to make sure that the connection was established successfuly and you have access to ROS topics.
 
-5. Ask your TA to help launch the `ur_ros` program on the UR3e tablet. Note, at this point you are controlling the arm from your computer. 
+5. Ask your TA to help launch the `ur3e_ros` program on the UR3e tablet. Note, at this point you are controlling the arm from your computer. The terminal with ROS drivers should print the following text `Robot connected to reverse interface. Ready to receive control commands.`
 
 6. Start Moveit! with Rviz for UR3e:
 
