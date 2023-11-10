@@ -179,7 +179,7 @@ moveit_msgs::RobotTrajectory ArmController::planCartesianPath(geometry_msgs::Pos
   move_group_interface.setPoseReferenceFrame(reference_frame);
 
   moveit_msgs::RobotTrajectory trajectory;
-  const double jump_threshold = 0.0;
+  const double jump_threshold = 5.0;
   const double eef_step = 0.005;
   double fraction = move_group_interface.computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
 
