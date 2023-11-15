@@ -29,9 +29,13 @@ catkin_package(
 #-------------------------------------------------------------------------#
 
 # Tactile Controller
-add_executable(square src/square.cpp)
-target_link_libraries(square ${catkin_LIBRARIES})
+# add_executable(square src/square.cpp)
+# target_link_libraries(square ${catkin_LIBRARIES})
+add_executable(square_horizontal src/square_horizontal.cpp)
+target_link_libraries(square_horizontal ${catkin_LIBRARIES})
 add_executable(circle src/circle.cpp)
 target_link_libraries(circle ${catkin_LIBRARIES})
+add_executable(circle_horizontal src/circle_horizontal.cpp)
+target_link_libraries(circle_horizontal ${catkin_LIBRARIES})
 add_executable(RecordPose src/RecordPose.cpp)
 target_link_libraries(RecordPose ${catkin_LIBRARIES})
