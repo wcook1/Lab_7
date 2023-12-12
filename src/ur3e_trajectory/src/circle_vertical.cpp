@@ -1,4 +1,4 @@
-#include "../include/square_horizontal.hpp"
+#include "../include/circle_horizontal.hpp"
 
 int main(int argc, char **argv)
 {
@@ -31,7 +31,6 @@ int main(int argc, char **argv)
     geometry_msgs::Pose pose_target;
     pose_target.position.x = 0.0;
     pose_target.position.y = 0.25;
-    // pose_target.position.z = 0.70;
     pose_target.position.z = 1.20;
     pose_target.orientation.x = -0.707;
     pose_target.orientation.y = 0.0;
@@ -52,59 +51,21 @@ int main(int argc, char **argv)
 
     // Get the start Pose
     geometry_msgs::Pose start_pose = arm_move_group.getCurrentPose().pose;
-
-    geometry_msgs::Pose end_pose = start_pose;
-    // end_pose.position.x = 0.0;
-    // end_pose.position.y = 0.22;
-    // end_pose.position.z = 1.30;
-    end_pose.position.x = 0.0;
-    end_pose.position.y = 0.25;
-    end_pose.position.z = 1.25;
-
-    // Define waypoints for the cartesian path
     std::vector<geometry_msgs::Pose> waypoints;
-    waypoints.push_back(end_pose);
 
-    end_pose = arm_move_group.getCurrentPose().pose;
-    // end_pose.position.x = 0.60;
-    // end_pose.position.y = 0.22;
-    // end_pose.position.z = 0.70;
-    end_pose.position.x = 0.05;
-    end_pose.position.y = 0.25;
-    end_pose.position.z = 1.20;
+    float radius = 0.05;
+    float theta = 0;
 
-    waypoints.push_back(end_pose);
+    for (double theta=0;theta<2*M_PI;theta+=M_PI/180){
 
-    end_pose = arm_move_group.getCurrentPose().pose;
-    // end_pose.position.x = 0.00;
-    // end_pose.position.y = 0.22;
-    // end_pose.position.z = 0.10;
-    end_pose.position.x = 0.00;
-    end_pose.position.y = 0.25;
-    end_pose.position.z = 1.15;
+        geometry_msgs::Pose end_pose = start_pose;
 
-    waypoints.push_back(end_pose);
-
-    end_pose = arm_move_group.getCurrentPose().pose;
-    // end_pose.position.x = -0.60;
-    // end_pose.position.y = 0.22;
-    // end_pose.position.z = 0.70;
-    end_pose.position.x = -0.05;
-    end_pose.position.y = 0.25;
-    end_pose.position.z = 1.20;
-
-    waypoints.push_back(end_pose);
-
-    end_pose = arm_move_group.getCurrentPose().pose;
-    // end_pose.position.x = 0.0;
-    // end_pose.position.y = 0.22;
-    // end_pose.position.z = 1.30;
-    end_pose.position.x = 0.0;
-    end_pose.position.y = 0.25;
-    end_pose.position.z = 1.25;
-
-
-    waypoints.push_back(end_pose);
+        // theta = (i/20) * 2 * M_PI;
+        end_pose.position.x = start_pose.position.x + (radius * cos(theta));
+        end_pose.position.z = start_pose.position.z + (radius * sin(theta));
+        waypoints.push_back(end_pose);
+         
+    }
 
     moveit_msgs::RobotTrajectory trajectory;
     trajectory = ArmController::planCartesianPath(start_pose, waypoints, reference_frame, arm_move_group);

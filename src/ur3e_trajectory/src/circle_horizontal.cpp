@@ -29,9 +29,12 @@ int main(int argc, char **argv)
     moveit::planning_interface::MoveGroupInterface::Plan pose_plan;
 
     geometry_msgs::Pose pose_target;
-    pose_target.position.x = 0.175;
-    pose_target.position.y = 0.175;
-    pose_target.position.z = 1.00;
+    // pose_target.position.x = 0.175;
+    // pose_target.position.y = 0.175;
+    // pose_target.position.z = 1.00;
+    pose_target.position.x = 0.50;
+    pose_target.position.y = 0.00;
+    pose_target.position.z = 0.95;
     // pose_target.orientation.x = -0.707;
     pose_target.orientation.x = 0.0;
     pose_target.orientation.y = 1.0;
@@ -54,7 +57,7 @@ int main(int argc, char **argv)
     geometry_msgs::Pose start_pose = arm_move_group.getCurrentPose().pose;
     std::vector<geometry_msgs::Pose> waypoints;
 
-    float radius = 0.0875;
+    float radius = 0.50;
     float theta = 0;
 
     for (double theta=0;theta<2*M_PI;theta+=M_PI/180){
@@ -62,9 +65,16 @@ int main(int argc, char **argv)
         geometry_msgs::Pose end_pose = start_pose;
 
         // theta = (i/20) * 2 * M_PI;
-        end_pose.position.x = start_pose.position.x + (radius * sin(theta));
-        end_pose.position.y = start_pose.position.y + (radius * cos(theta));
-        waypoints.push_back(end_pose);
+        end_pose.position.x = 0.00 + (radius * cos(theta));
+        end_pose.position.y = 0.00 + (radius * sin(theta));
+        // waypoints.push_back(end_pose);
+
+        pose_plan_success = ArmController::planToPoseTarget(planning_options, arm_move_group, end_pose, reference_frame, pose_plan);
+
+        if(pose_plan_success){
+            ROS_INFO("Moving to pose target");
+            arm_move_group.execute(pose_plan);
+        }
          
     }
 
